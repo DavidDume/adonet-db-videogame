@@ -10,5 +10,11 @@ namespace adonet_db_videogame
     {
         public int Id { get; set; }
         public string Name { get; set; }
+
+        public Videogame(int id, string name)
+        {
+            Id = id;
+            Name = name;
+        }
     }
 }
