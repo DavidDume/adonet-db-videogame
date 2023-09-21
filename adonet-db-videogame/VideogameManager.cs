@@ -86,5 +86,29 @@ namespace adonet_db_videogame
             return false;
         }
 
+        public static List<Videogame> GetVideogamesByName(string namePart)
+        {
+            var games = new List<Videogame>();
+
+            using (var connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                SqlCommand command = new SqlCommand("SELECT id, name FROM videogames WHERE Name LIKE @namePart", connection);
+                
+                command.Parameters.Add(new SqlParameter("@namePart", "%" + namePart + "%"));
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        games.Add(new Videogame(reader.GetInt32(0), reader.GetString(1)));
+                            
+                    }
+                }
+                
+            }
+            return games;
+        }
     }
 }
